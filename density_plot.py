@@ -11,10 +11,12 @@
 # ==============================================================================================
 
 import numpy as np
+import matplotlib
 import matplotlib.pyplot as plt
 import math
 
-plt.rcParams.update({'font.family': 'serif', 'mathtext.fontset': 'cm', 'text.usetex': False})
+matplotlib.rcParams.update({"font.family": "serif", "mathtext.fontset": "cm", 
+                            "text.usetex": False, "pdf.fonttype": 42, "ps.fonttype": 42})
 
 
 def calculate_density(N, p):

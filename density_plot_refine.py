@@ -11,10 +11,12 @@
 # ==============================================================================================
 
 import numpy as np
+import matplotlib
 import matplotlib.pyplot as plt
 import math
 
-plt.rcParams.update({'font.family': 'serif', 'mathtext.fontset': 'cm', 'text.usetex': False})
+matplotlib.rcParams.update({"font.family": "serif", "mathtext.fontset": "cm", 
+                            "text.usetex": False, "pdf.fonttype": 42, "ps.fonttype": 42})
 
 
 def calculate_density(N, p):
@@ -88,11 +90,11 @@ def plot_results(X, Y, Z, title, z_label, cmap='viridis', dot_color='black', is_
     :param is_density: If True, sets Z-axis limit to [0, 1]
     """
     # 1. 3D Surface Plot
-    fig = plt.figure(figsize=(10, 7))
+    fig = plt.figure(figsize=(10, 10))
     ax = fig.add_subplot(111, projection='3d')
     surf = ax.plot_surface(X, Y, Z, cmap=cmap, alpha=0.7, edgecolor='none')
     ax.scatter(X.flatten(), Y.flatten(), Z.flatten(), c=dot_color, s=15, alpha=0.8)
-    ax.set_title(title, fontsize=18)
+    # ax.set_title(title, fontsize=18)
     ax.set_xlabel(r'Matrix dimension $N$', fontsize=18, labelpad=12)
     plt.xticks(fontsize=16)
     ax.set_ylabel(r'Field size $p$', fontsize=18, labelpad=12)
@@ -100,8 +102,15 @@ def plot_results(X, Y, Z, title, z_label, cmap='viridis', dot_color='black', is_
     ax.set_zlabel(z_label, fontsize=18, labelpad=12)
     ax.tick_params(axis='z', labelsize=16)
     if is_density: ax.set_zlim(0, 1.0)
-    cbar = fig.colorbar(surf, shrink=0.5, aspect=10, pad=0.08)
-    cbar.ax.tick_params(axis='y', labelsize=16)
+    cbar = fig.colorbar(
+    surf,
+    orientation='horizontal',
+    pad=0.05,        # distance below plot
+    shrink=0.55,     # shorter bar
+    fraction=0.05,   # thinner bar
+    aspect=25
+    )
+    cbar.ax.tick_params(labelsize=16)
     plt.tight_layout()
     plt.show()
 
@@ -109,13 +118,13 @@ def plot_results(X, Y, Z, title, z_label, cmap='viridis', dot_color='black', is_
     plt.figure(figsize=(10, 5))
     for i, p_val in enumerate(Y[:, 0]):
         plt.plot(X[0, :], Z[i, :], marker='o', label=f'p = {p_val}')
-    plt.title(f"{z_label} vs Matrix Dimension", fontsize=18)
-    plt.xlabel(r'Matrix dimension $N$', fontsize=18)
-    plt.xticks(fontsize=16)
-    plt.ylabel(z_label, fontsize=18)
-    plt.yticks(fontsize=16)
+    # plt.title(f"{z_label} vs Matrix Dimension", fontsize=20)
+    plt.xlabel(r'Matrix dimension $N$', fontsize=20)
+    plt.xticks(fontsize=18)
+    plt.ylabel(z_label, fontsize=20)
+    plt.yticks(fontsize=18)
     if is_density: plt.ylim(0, 1.1)
-    plt.legend(loc='best', fontsize=16)
+    plt.legend(loc='best', fontsize=18)
     plt.grid(True, alpha=0.3)
     plt.tight_layout()
     plt.show()
@@ -124,13 +133,13 @@ def plot_results(X, Y, Z, title, z_label, cmap='viridis', dot_color='black', is_
     plt.figure(figsize=(10, 5))
     for j, n_val in enumerate(X[0, :]):
         plt.plot(Y[:, 0], Z[:, j], marker='s', label=f'N = {n_val}')
-    plt.title(f"{z_label} vs Field Size", fontsize=18)
-    plt.xlabel(r'Field size $p$', fontsize=18)
-    plt.xticks(fontsize=16)
-    plt.ylabel(z_label, fontsize=18)
-    plt.yticks(fontsize=16)
+    # plt.title(f"{z_label} vs Field Size", fontsize=20)
+    plt.xlabel(r'Field size $p$', fontsize=20)
+    plt.xticks(fontsize=18)
+    plt.ylabel(z_label, fontsize=20)
+    plt.yticks(fontsize=18)
     if is_density: plt.ylim(0, 1.1)
-    plt.legend(loc='best', fontsize=16)
+    plt.legend(loc='best', fontsize=18)
     plt.grid(True, alpha=0.3)
     plt.tight_layout()
     plt.show()
